@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=10">
+  <title>Ransomleak Proxy</title>
+  <link href="{{PROTOCOL}}{{TENANT}}.{{HOST}}/public/scorm/proxy-provider.css" rel="stylesheet">
+
+  <script type="text/javascript">
+    window.PROTOCOL = '{{PROTOCOL}}';
+    window.TENANT = '{{TENANT}}';
+    window.HOST = '{{HOST}}';
+    window.PACKAGE_ID = '{{PACKAGE_ID}}';
+    window.SCORM_VERSION = '{{SCORM_VERSION}}';
+  </script>
+</head>
+<body>
+
+<div id="proxy-wrapper">
+  <!--  <iframe id="proxy" name="proxy" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>-->
+</div>
+
+<script src="{{PROTOCOL}}{{TENANT}}.{{HOST}}/public/scorm/proxy-provider.js" type="text/javascript"></script>
+</body>
+</html>

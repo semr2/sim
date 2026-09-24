@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USB Drop Attack Simulation</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/simulation.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="assets/icons/shield.svg" alt="" width="28" height="28"><div><strong>USB Drop Attack</strong><span>Security awareness simulation</span></div></div>
+  <div class="chip" id="scorechip" aria-live="polite">Score 40</div>
+</header>
+<nav id="progress" class="progress" aria-label="Progress"></nav>
+<main id="stage" class="stage"></main>
+<div id="canvas-container" class="usb-3d-viewport" hidden>
+  <div class="three-canvas-mount" aria-hidden="true"></div>
+  <div class="viewport-overlay"><span class="status-tag">3D THREAT ASSET #0492</span><p>Hover/Drag to inspect payload hardware</p></div>
+</div>
+<div id="leak-portal" class="modal hidden" hidden>
+  <section class="modal-content portal-content" role="dialog" aria-modal="true" aria-labelledby="portal-title" tabindex="-1">
+    <header class="dls-header">
+      <div class="logo"><img src="assets/icons/shield.svg" alt="" class="icon-danger"><span id="portal-title">DISCLOSURE PORTAL // TRAINING SIMULATION</span></div>
+      <div class="stats-bar"><span>SIMULATED LISTINGS: <strong>01</strong></span><span>SIMULATED DATA: <strong>250 GB</strong></span></div>
+      <button class="modal-close" type="button" data-close-portal aria-label="Close disclosure portal">×</button>
+    </header>
+    <p class="portal-disclaimer">Fictional training scenario. Organization, files, countdown, and figures are simulated.</p>
+    <main class="leak-grid">
+      <article class="portal-victim-card">
+        <div class="card-header"><span class="badge" id="portal-badge">SIMULATED EXPOSURE IN PROGRESS</span><span class="timer" id="timer-1">--h --m --s</span></div>
+        <h2>Northstar Logistics <small>(fictional)</small></h2>
+        <p class="data-size">Simulated volume: <strong>250 GB</strong> (.pdf, .xlsx, .sql)</p>
+        <p class="description">A fictional listing demonstrates how stolen-data claims may be presented. No files were taken or uploaded.</p>
+        <div class="card-actions">
+          <button class="btn" type="button" data-portal-action="samples">Inspect Sample Files</button>
+          <button class="btn danger" type="button" data-portal-action="torrent">Download Torrent</button>
+        </div>
+      </article>
+      <section class="chat-widget" aria-labelledby="chat-title">
+        <div class="chat-header"><span class="status-indicator online" aria-hidden="true"></span><h2 id="chat-title">Chat with Support <span>[Operator ID: #8841]</span></h2><span class="chat-tag">SIMULATED · OFFLINE</span></div>
+        <div class="chat-messages" id="chat-box" aria-live="polite" aria-relevant="additions">
+          <div class="message threat-actor"><strong>[Operator]:</strong> We claim to have encrypted systems and copied 450 GB of employee data. We threaten to publish samples if the organization does not meet our demand. This fictional threat demonstrates double extortion: encryption plus threatened data exposure.</div>
+        </div>
+        <p class="chat-guidance">Training note: Follow your incident-response plan. Do not share internal details or negotiate unless authorized.</p>
+        <div class="chat-actions" aria-label="Choose a simulated response">
+          <button class="btn" type="button" data-chat-response="extension">Request Extension</button>
+          <button class="btn" type="button" data-chat-response="proof">Request Proof</button>
+          <button class="btn primary" type="button" data-chat-response="escalate">Stop contact and notify incident response</button>
+        </div>
+      </section>
+    </main>
+    <div class="modal-actions"><button class="btn primary" type="button" data-close-portal>Return to Simulation</button></div>
+  </section>
+</div>
+<div id="file-modal" class="modal hidden" hidden>
+  <section class="modal-content" role="dialog" aria-modal="true" aria-labelledby="proof-title" tabindex="-1">
+    <div class="modal-heading">
+      <div><p class="eyebrow">Simulation evidence</p><h2 id="proof-title">Proof of Exfiltration — Sample Files</h2></div>
+      <button class="modal-close" type="button" data-close-modal aria-label="Close viewer">×</button>
+    </div>
+    <p class="proof-disclaimer">Fictional file listing for training. No files or personal data were accessed or transferred.</p>
+    <div class="proof-layout">
+      <div class="file-tree" aria-label="Sample file list">
+        <ul>
+          <li class="folder">📁 Confidential_HR
+            <ul>
+              <li><button type="button" class="file" data-preview="salaries">📄 Executive_Salaries.csv <span>(12 MB)</span></button></li>
+              <li><button type="button" class="file" data-preview="passports">📄 Executive_Passports.pdf <span>(45 MB)</span></button></li>
+            </ul>
+          </li>
+          <li class="folder">📁 Source_Code
+            <ul>
+              <li><button type="button" class="file" data-preview="database">📄 production_db.sql <span>(3.2 GB)</span></button></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div id="file-preview-box" class="preview-box" aria-live="polite"><em>Select a file to inspect a redacted proof sample.</em></div>
+    </div>
+    <div class="modal-actions"><button class="btn primary" type="button" data-close-modal>Close Viewer</button></div>
+  </section>
+</div>
+<div id="torrent-modal" class="modal hidden" hidden>
+  <section class="modal-content torrent-content" role="dialog" aria-modal="true" aria-labelledby="torrent-title" tabindex="-1">
+    <p class="eyebrow">Training simulation</p>
+    <h2 id="torrent-title">Download disabled</h2>
+    <p>This control is a simulated trap. No torrent, file, or network request was created. In a real incident, do not download unknown files; notify your security team.</p>
+    <div class="modal-actions"><button class="btn primary" type="button" data-close-torrent>Return to Portal</button></div>
+  </section>
+</div>
+<footer class="foot"><span>Everything here is simulated. No real device, file or program is used.</span><span id="mode"></span></footer>
+<script src="js/three.min.js"></script>
+<script src="js/scorm.js"></script>
+<script src="js/usb-drop.js"></script>
+<script src="js/usb-3d.js"></script>
+</body>
+</html>
