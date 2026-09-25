@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>USB Drop Attack</title>
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<div id="loading" class="loading is-ready" role="status" aria-live="polite" aria-hidden="true">
+  <div class="loading-frame" aria-hidden="true"></div>
+  <div class="loading-content">
+    <svg class="loading-fox" viewBox="0 0 128 128" aria-hidden="true">
+      <path class="fox-glow" d="M64 8 92 20l28 8v62l-56 34L8 90V28l28-8z"/>
+      <path class="fox-face" d="m18 31 24-8 8 22 14-9 14 9 8-22 24 8v49L64 111 18 80z"/>
+      <path class="fox-ear" d="m27 28 15-20 8 32zM101 28 86 8l-8 32z"/>
+      <path class="fox-brow" d="m39 47 16 7M89 47l-16 7"/>
+      <circle class="fox-eye" cx="44" cy="61" r="7"/><circle class="fox-eye" cx="84" cy="61" r="7"/>
+      <circle class="fox-pupil" cx="46" cy="59" r="2.5"/><circle class="fox-pupil" cx="86" cy="59" r="2.5"/>
+      <path class="fox-nose" d="m55 77 9-5 9 5-9 16z"/>
+    </svg>
+    <p>Preparing simulation...</p>
+  </div>
+</div>
+
+<section id="welcome" class="welcome" aria-labelledby="welcome-title">
+  <div class="welcome-frame" aria-hidden="true"></div>
+  <div class="welcome-card">
+    <div class="brand-lockup">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+      <span><b>RansomLeak</b><small>Security Training</small></span>
+    </div>
+    <h1 id="welcome-title">USB Drop Attack</h1>
+    <p class="welcome-copy">A shiny USB drive labeled 'Confidential - Salary Data' sits in your apartment building's lobby. The temptation to see what's inside proves irresistible. Experience how attackers weaponize curiosity through USB drop attacks, and learn why that innocent-looking flash drive could compromise your entire company.</p>
+    <p class="fiction-note">All company names, characters, and scenarios are fictional. Any resemblance to real entities is coincidental.</p>
+    <div class="welcome-actions">
+      <button id="beginSimulation" class="begin-btn" type="button"><span aria-hidden="true">▷</span> Begin Simulation</button>
+      <button id="openSettings" class="settings-btn" type="button"><span aria-hidden="true">⚙</span> Settings</button>
+    </div>
+  </div>
+</section>
+
+<div id="settingsDialog" class="settings-backdrop" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden>
+  <section class="settings-card">
+    <h2 id="settings-title">Simulation settings</h2>
+    <label class="motion-setting"><span><b>Idle camera motion</b><small>Gently rotate the scene while you are not interacting.</small></span><input id="motionToggle" type="checkbox" checked></label>
+    <button id="closeSettings" class="settings-done" type="button">Done</button>
+  </section>
+</div>
+
+<div id="roleIntro" class="role-backdrop" role="dialog" aria-modal="true" aria-labelledby="role-name" hidden>
+  <section class="role-card">
+    <div class="avatar-icon" aria-hidden="true"><span></span></div>
+    <h2 id="role-name">Abebe</h2>
+    <span class="role-badge">DEFENDER</span>
+    <p>You are <strong>Abebe</strong>, an employee at <strong>DataFlow Analytics</strong>.</p>
+    <button id="roleContinue" type="button">Continue</button>
+  </section>
+</div>
+
+<aside id="storyRail" class="story-rail" aria-label="Simulation story" hidden>
+  <header class="rail-brand">
+    <span class="rail-logo" aria-hidden="true"><i></i><i></i></span>
+    <span><b>RansomLeak</b><small>Security Training</small></span>
+  </header>
+  <div class="rail-course"><span aria-hidden="true">♙</span> USB Drop Attack</div>
+  <div class="rail-progress">
+    <div class="progress-label"><span>PROGRESS</span><b id="storyProgressText">0%</b></div>
+    <div class="progress-track"><i id="storyProgressBar"></i></div>
+  </div>
+  <div id="storyContent" class="story-content"></div>
+  <footer class="story-footer">
+    <p id="storyPrompt">Click Next Step to continue.</p>
+    <button id="storyNext" type="button">Next Step</button>
+  </footer>
+</aside>
+<div class="scene-avatar" aria-label="Active learner Abebe"><span aria-hidden="true"><i></i></span><b>ABEBE</b></div>
+
+<div id="stage">
+  <canvas id="gl"></canvas>
+  <div id="labels" aria-hidden="true"><div id="usbTarget"><span>DROP USB HERE</span></div><div id="usbLabel">UNKNOWN USB</div></div>
+  <div id="glfail" class="glfail" hidden>
+    <h2>3D view unavailable</h2>
+    <p>Your browser or LMS blocked WebGL. The course still works &mdash; use the list at the bottom of the screen.</p>
+  </div>
+</div>
+
+<header id="hud" class="hud">
+  <div class="hud-id">
+    <span class="mark" aria-hidden="true"></span>
+    <div>
+      <h1>USB Drop Attack</h1>
+      <p id="learner">Explore threat response</p>
+    </div>
+  </div>
+  <div class="hud-stats">
+    <div class="stat"><span id="statDone">0/4</span><label>Questions</label></div>
+    <div class="stat"><span id="statScore">0%</span><label>Score</label></div>
+    <div class="stat stat-bar">
+      <div class="bar"><i id="bar"></i></div>
+      <label>Progress</label>
+    </div>
+  </div>
+</header>
+
+<nav id="dock" class="dock" aria-label="Questions"></nav>
+
+<div id="hint" class="hint">
+  <b>Drag</b> to look around &middot; <b>Scroll</b> to zoom &middot; <b>Click a marker</b> to start
+</div>
+
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" hidden>
+  <div class="sheet">
+    <div class="sheet-head">
+      <div>
+        <p class="eyebrow"><span id="mStation">Question</span> &middot; <span id="mStep">Step 1</span></p>
+        <h2 id="mTitle">Title</h2>
+      </div>
+      <button id="mClose" class="icon-btn" aria-label="Close and go back">&times;</button>
+    </div>
+    <div class="sheet-body" id="mBody"></div>
+    <div class="sheet-foot">
+      <div id="mMeta" class="meta"></div>
+      <button id="mNext" class="btn btn-primary" hidden>Continue</button>
+    </div>
+  </div>
+</div>
+
+<div id="done" class="modal" role="dialog" aria-modal="true" hidden>
+  <div class="sheet sheet-wide">
+    <div class="sheet-head">
+      <div>
+        <p class="eyebrow">Course complete</p>
+        <h2 id="dTitle">Debrief</h2>
+      </div>
+    </div>
+    <div class="sheet-body" id="dBody"></div>
+    <div class="sheet-foot">
+      <div id="dMeta" class="meta"></div>
+      <button id="dReview" class="btn">Back</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/scorm.js"></script>
+<script src="assets/js/gl.js"></script>
+<script src="assets/js/kit.js"></script>
+<script src="assets/js/scene.js"></script>
+<script src="assets/js/course.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
